@@ -50,22 +50,24 @@ public class GameTest {
 			}
 			if (bWithBombs == null)
 				bWithBombs = b.boardWithBombs(x, y);
-			// test
-			System.out.println("Cheatcode:");
-			bWithBombs.ShowBoard();
+
+			// test System.out.println("Cheatcode:");
+			// test bWithBombs.ShowBoard();
+
 			if (bWithBombs.array[x][y] == '*') {
 				alive = false;
 				continue;
 			}
 			b.UpdateBoardAfterStep(x, y, bWithBombs);
+			if (b.isGameWon(bWithBombs)) {
+				System.out.println("You won!");
+				break;
+			}
 
 		}
 		if (!alive) {
 			System.out.println("You lost!");
 			bWithBombs.ShowBoard();
-		}
-		if (b.isGameWon(bWithBombs)) {
-			System.out.println("You won!");
 		}
 	}
 

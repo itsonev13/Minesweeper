@@ -108,103 +108,69 @@ public class Board {
 		return bwb;
 	}
 
-	// This method checks if the adjacent squares are without a bomb and
-	// if there is a bomb it counts them
 	public void UpdateBoardAfterStep(int x, int y, Board Boardwithbombs) {
+		int beforeX = 0, afterX = 0;
+		int beforeY = 0, afterY = 0;
 		int count = 0;
-		// above the chosen space
-		if (x <= this.x - 1 && x > 0) {
-			if (Boardwithbombs.array[x - 1][y] == '*')
-				count++;
+		if (x == 0) {
+			beforeX = x;
+			afterX = x + 1;
+		} else if (x == this.x - 1) {
+			afterX = x;
+			beforeX = x - 1;
+		} else {
+			beforeX = x - 1;
+			afterX = x + 1;
 		}
-		// under the chosen space
-		if (x < this.x - 1 && x >= 0) {
-			if (Boardwithbombs.array[x + 1][y] == '*')
-				count++;
+		if (y == 0) {
+			beforeY = y;
+			afterY = y + 1;
+		} else if (y == this.y - 1) {
+			afterY = y;
+			beforeY = y + 1;
+		} else {
+			beforeY = y - 1;
+			afterY = y + 1;
 		}
-		// right of the chosen space
-		if (y < this.y - 1 && y >= 0) {
-			if (Boardwithbombs.array[x][y + 1] == '*')
-				count++;
+		for (int i = beforeX; i <= afterX; i++) {
+			for (int j = beforeY; j <= afterY; j++) {
+				if (i != x || j != y)
+					if (Boardwithbombs.array[i][j] == '*')
+						count++;
+			}
 		}
-		// left of the chosen space
-		if (y <= this.y - 1 && y > 0) {
-			if (Boardwithbombs.array[x][y - 1] == '*')
-				count++;
-		}
-		// up and right of the chosen space
-		if (y < this.y - 1 && x <= this.x - 1 && y >= 0 && x > 0) {
-			if (Boardwithbombs.array[x - 1][y + 1] == '*')
-				count++;
-		}
-		// up and left of the chosen space
-		if (y <= this.y - 1 && x <= this.x - 1 && y > 0 && x > 0) {
-			if (this.array[x - 1][y - 1] == '*')
-				count++;
-		}
-		// down and right of the chosen space
-		if (y < this.y - 1 && x < this.x - 1 && y >= 0 && x >= 0) {
-			if (Boardwithbombs.array[x + 1][y + 1] == '*')
-				count++;
-		}
-		// down and left of the chosen space
-		if (y <= this.y - 1 && x < this.x - 1 && y > 0 && x >= 0) {
-			if (Boardwithbombs.array[x + 1][y - 1] == '*')
-				count++;
-		}
-		// the number of bombs next to the space
-		this.array[x][y] = (char) (count + 48);
 		if (count == 0) {
 			clearAdjacent(x, y, Boardwithbombs);
 		}
+		this.array[x][y] = (char) (count + 48);
 
 	}
 
 	private void clearAdjacent(int x, int y, Board boardWithBombs) {
-
-		// above the chosen space
-		if (x <= this.x - 1 && x > 0) {
-			if (this.array[x - 1][y] == '-' && boardWithBombs.array[x - 1][y] != '*')
-				this.array[x - 1][y] = ' ';
+		int beforeX = 0, afterX = 0;
+		int beforeY = 0, afterY = 0;
+		int count = 0;
+		if (x == 0) {
+			beforeX = x;
+			afterX = x + 1;
+		} else if (x == this.x - 1) {
+			afterX = x;
+			beforeX = x - 1;
+		} else {
+			beforeX = x - 1;
+			afterX = x + 1;
 		}
-		// under the chosen space
-		if (x < this.x - 1 && x >= 0) {
-			if (this.array[x + 1][y] == '-' && boardWithBombs.array[x + 1][y] != '*')
-				this.array[x + 1][y] = ' ';
-
+		if (y == 0) {
+			beforeY = y;
+			afterY = y + 1;
+		} else if (y == this.y - 1) {
+			afterY = y;
+			beforeY = y - 1;
+		} else {
+			beforeY = y - 1;
+			afterY = y + 1;
 		}
-		// right of the chosen space
-		if (y < this.y - 1 && y >= 0) {
-			if (this.array[x][y + 1] == '-' && boardWithBombs.array[x][y + 1] != '*')
-				this.array[x][y + 1] = ' ';
-		}
-		// left of the chosen space
-		if (y <= this.y - 1 && y > 0) {
-			if (this.array[x][y - 1] == '-' && boardWithBombs.array[x][y - 1] != '*')
-				this.array[x][y - 1] = ' ';
-
-		}
-		// up and right of the chosen space
-		if (y < this.y - 1 && x <= this.x - 1 && y >= 0 && x > 0) {
-			if (this.array[x - 1][y + 1] == '-' && boardWithBombs.array[x - 1][y + 1] != '*')
-				this.array[x - 1][y + 1] = ' ';
-
-		}
-		// up and left of the chosen space
-		if (y <= this.y - 1 && x <= this.x - 1 && y > 0 && x > 0) {
-			if (this.array[x - 1][y - 1] == '-' && boardWithBombs.array[x - 1][y - 1] != '*')
-				this.array[x - 1][y - 1] = ' ';
-		}
-		// down and right of the chosen space
-		if (y < this.y - 1 && x < this.x - 1 && y >= 0 && x >= 0) {
-			if (this.array[x + 1][y + 1] == '-' && boardWithBombs.array[x + 1][y + 1] != '*')
-				this.array[x + 1][y + 1] = ' ';
-		}
-		// down and left of the chosen space
-		if (y <= this.y - 1 && x < this.x - 1 && y > 0 && x >= 0) {
-			if (this.array[x + 1][y - 1] == '-' && boardWithBombs.array[x + 1][y - 1] != '*')
-				this.array[x + 1][y - 1] = ' ';
-		}
+		this.recursion(afterY, beforeX, beforeY, afterX, beforeY, beforeX, x, y);
 	}
 
 	public boolean isGameWon(Board boardWithBombs) {
@@ -216,8 +182,8 @@ public class Board {
 					bombcount++;
 			}
 		}
-		for (int i = 0; i < boardWithBombs.x; i++) {
-			for (int k = 0; k < boardWithBombs.y; k++) {
+		for (int i = 0; i < this.x; i++) {
+			for (int k = 0; k < this.y; k++) {
 				if (this.array[i][k] == '-')
 					freespacescount++;
 				if (freespacescount > bombcount)
@@ -226,9 +192,32 @@ public class Board {
 			if (freespacescount > bombcount)
 				break;
 		}
-		if (freespacescount == bombcount)
+		if (freespacescount == bombcount) {
 			return true;
-
+		}
 		return false;
 	}
+
+	private void recursion(int aftery, int i, int j, int afterx, int beforey, int beforex, int x, int y) {
+		if (i <= afterx) {
+			if (j <= aftery) {
+				// inner loop when j < n
+				// inner loop body
+
+				if (i != x || j != y)
+					if (this.array[i][j] == '-')
+						this.array[i][j] = ' ';
+				recursion(aftery, i, j + 1, afterx, beforey, beforex, x, y); // increment inner counter only
+
+			} else { // when j has reached n...
+						// outer loop, which restarts inner loop
+
+				recursion(aftery, i + 1, beforey, afterx, beforey, beforex, x, y); // increment outer counter,
+																					// reset
+				// inner
+				// since we're starting a new inner loop
+			}
+		}
+	}
+
 }
