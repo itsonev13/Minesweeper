@@ -1,12 +1,13 @@
 package Minepack;
 
-import java.util.LinkedList;
-import java.util.Queue;
 import java.util.Scanner;
 
 public class GameTest {
+	static GUI gui = null;
+
 	public static void main(String[] args) {
 		int choise = -1;
+
 		Board b = null;
 		Board bWithBombs = null;
 		Scanner choiseScan = new Scanner(System.in);
@@ -26,58 +27,19 @@ public class GameTest {
 		switch (choise) {
 		case 0:
 			b = new Board(9, 9);
+			gui = new GUI(750, 829);
+			gui.setBoard(b);
 			break;
 		case 1:
 			b = new Board(16, 16);
+			gui = new GUI(750, 829);
+			gui.setBoard(b);
 			break;
 		case 2:
 			b = new Board(24, 24);
+			gui = new GUI(980, 1050);
+			gui.setBoard(b);
 			break;
 		}
-
-		while (alive) {
-			System.out.print("\n");
-			System.out.println("Current Status of Board :");
-			b.ShowBoard();
-			System.out.print("\n");
-			System.out.print("Enter your move ,(row,column) ->");
-			coordinates = coordinatesScan.nextLine();
-			Queue<Integer> coordi = splitCoordinates(coordinates);
-			int x = coordi.poll();
-			int y = coordi.poll();
-			if (b.array[x][y] != '-' && b.array[x][y] != '*') {
-				System.out.println("You have already stepped on this square");
-			}
-			if (bWithBombs == null)
-				bWithBombs = b.boardWithBombs(x, y);
-
-			// test System.out.println("Cheatcode:");
-			// test bWithBombs.ShowBoard();
-
-			if (bWithBombs.array[x][y] == '*') {
-				alive = false;
-				continue;
-			}
-			b.UpdateBoardAfterStep(x, y, bWithBombs);
-			if (b.isGameWon(bWithBombs)) {
-				System.out.println("You won!");
-				break;
-			}
-
-		}
-		if (!alive) {
-			System.out.println("You lost!");
-			bWithBombs.ShowBoard();
-		}
 	}
-
-	public static Queue<Integer> splitCoordinates(String coordinates) {
-		Queue<Integer> splitcoords = new LinkedList<>();
-		String[] arrOfCoords = coordinates.split(" ", 2);
-		for (String s : arrOfCoords) {
-			splitcoords.add(Integer.parseInt(s));
-		}
-		return splitcoords;
-	}
-
 }

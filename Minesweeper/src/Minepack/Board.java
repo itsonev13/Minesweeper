@@ -127,7 +127,7 @@ public class Board {
 			afterY = y + 1;
 		} else if (y == this.y - 1) {
 			afterY = y;
-			beforeY = y + 1;
+			beforeY = y - 1;
 		} else {
 			beforeY = y - 1;
 			afterY = y + 1;
@@ -170,7 +170,7 @@ public class Board {
 			beforeY = y - 1;
 			afterY = y + 1;
 		}
-		this.recursion(afterY, beforeX, beforeY, afterX, beforeY, beforeX, x, y);
+		this.recursion4Clear(afterY, beforeX, beforeY, afterX, beforeY, beforeX, x, y);
 	}
 
 	public boolean isGameWon(Board boardWithBombs) {
@@ -198,7 +198,7 @@ public class Board {
 		return false;
 	}
 
-	private void recursion(int aftery, int i, int j, int afterx, int beforey, int beforex, int x, int y) {
+	private void recursion4Clear(int aftery, int i, int j, int afterx, int beforey, int beforex, int x, int y) {
 		if (i <= afterx) {
 			if (j <= aftery) {
 				// inner loop when j < n
@@ -207,13 +207,13 @@ public class Board {
 				if (i != x || j != y)
 					if (this.array[i][j] == '-')
 						this.array[i][j] = ' ';
-				recursion(aftery, i, j + 1, afterx, beforey, beforex, x, y); // increment inner counter only
+				recursion4Clear(aftery, i, j + 1, afterx, beforey, beforex, x, y); // increment inner counter only
 
 			} else { // when j has reached n...
 						// outer loop, which restarts inner loop
 
-				recursion(aftery, i + 1, beforey, afterx, beforey, beforex, x, y); // increment outer counter,
-																					// reset
+				recursion4Clear(aftery, i + 1, beforey, afterx, beforey, beforex, x, y); // increment outer counter,
+				// reset
 				// inner
 				// since we're starting a new inner loop
 			}
